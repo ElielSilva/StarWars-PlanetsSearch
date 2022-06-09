@@ -7,9 +7,9 @@ import LineFixed from './LineFixed';
 function Table() {
   const { data } = useContext(planetContext);
   const [nameFilter, setFilter] = useState(''); // aqui recebe o name especifico de um planeta a ser filtrado
-  // const [listNameFilter, setlistNameFilter] = useState([
-  //   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
-  // ]);
+  const [listNameFilter, setlistNameFilter] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
   const [numberFilter, setNumberFilter] = useState({
     column: 'population', operator: 'maior que', number: 0,
   });
@@ -22,7 +22,9 @@ function Table() {
         id: listFilter.length ? listFilter[listFilter.length - 1].id + 1 : 0,
         ...numberFilter },
     ]);
-    setNumberFilter({ column: 'population', operator: 'maior que', number: 0 });
+    setlistNameFilter(listNameFilter
+      .filter((name) => name !== numberFilter.column));
+    setNumberFilter({ column: nameFilter[0], operator: 'maior que', number: 0 });
   };
 
   const chengeFilterNumber = ({ name, value }) => {
@@ -49,18 +51,13 @@ function Table() {
         value={ numberFilter.column }
         onChange={ (e) => chengeFilterNumber(e.target) }
       >
-        <option
-          value="population"
-          selected
-          style={ { display: listFilter
-            .some(({ column }) => column === 'population') ? 'none' : 'block' } }
-        >
-          population
-        </option>
+        {listNameFilter && listNameFilter
+          .map((name) => (<option value={ name } key={ name }>{name}</option>))}
+        {/* <option value="population">population</option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+        <option value="surface_water">surface_water</option> */}
       </select>
       <select
         data-testid="comparison-filter"
@@ -117,3 +114,6 @@ function Table() {
 }
 // Table.propTypes = {};
 export default Table;
+
+// style={ { display: listFilter
+//   .some(({ column }) => column === 'population') ? 'none' : 'block' } }
