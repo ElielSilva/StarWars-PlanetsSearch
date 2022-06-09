@@ -17,7 +17,7 @@ function App() {
   // }, [setData]);
   return (
     <ProviderContext>
-      <span>Hello, App Eliel!</span>
+      <h1>StarsWars Planets Search</h1>
       <Table />
     </ProviderContext>
   );

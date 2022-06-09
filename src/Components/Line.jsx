@@ -15,7 +15,6 @@ function Line({ planet }) {
     created,
     edited,
     url } = planet;
-  // console.log();
   return (
     <tr>
       <td>{name}</td>

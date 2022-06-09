@@ -1,18 +1,21 @@
 import React, { useContext, useState } from 'react';
 import planetContext from '../Context/PlanetContext';
 import Line from './Line';
+import LineFixed from './LineFixed';
 // import PropTypes from 'prop-types';
 
 function Table() {
   const { data } = useContext(planetContext);
   const [nameFilter, setFilter] = useState(''); // aqui recebe o name especifico de um planeta a ser filtrado
+  // const [listNameFilter, setlistNameFilter] = useState([
+  //   'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  // ]);
   const [numberFilter, setNumberFilter] = useState({
     column: 'population', operator: 'maior que', number: 0,
   });
   const [listFilter, setListFilter] = useState([]); // aqui será armazenado um lista de filter
 
   const addFilterToList = () => {
-    // console.log(listFilter);
     setListFilter([
       ...listFilter,
       {
@@ -46,7 +49,14 @@ function Table() {
         value={ numberFilter.column }
         onChange={ (e) => chengeFilterNumber(e.target) }
       >
-        <option value="population">population</option>
+        <option
+          value="population"
+          selected
+          style={ { display: listFilter
+            .some(({ column }) => column === 'population') ? 'none' : 'block' } }
+        >
+          population
+        </option>
         <option value="orbital_period">orbital_period</option>
         <option value="diameter">diameter</option>
         <option value="rotation_period">rotation_period</option>
@@ -76,12 +86,6 @@ function Table() {
       >
         Filter
       </button>
-      {/* <input
-        type="button"
-        value="Filter"
-        data-testid="button-filter"
-        onClick={ () => addFilterToList() }
-      /> */}
       <ul>
         {listFilter && listFilter
           .map(({ column, operator, number }, index) => (
@@ -89,40 +93,24 @@ function Table() {
           ))}
       </ul>
       <table Border={ 2 }>
-        <tr>
-          <th>name</th>
-          <th>rotation period</th>
-          <th>orbital period</th>
-          <th>diameter</th>
-          <th>climate</th>
-          <th>gravity</th>
-          <th>terrain</th>
-          <th>surface water</th>
-          <th>population</th>
-          <th>films</th>
-          <th>created</th>
-          <th>edited</th>
-          <th>url</th>
-        </tr>
+        <LineFixed />
         {(nameFilter && !listFilter.length) && data
           .filter(({ name }) => (name.includes(nameFilter)))
           .map((planet) => (<Line key={ planet.name } planet={ planet } />))}
         {(!nameFilter && !listFilter.length) && data
           .map((planet) => (<Line key={ planet.name } planet={ planet } />))}
-        {listFilter.length && data
-          .filter((planet) => {
-            const { column, operator, number } = listFilter[0];
-            if (operator === 'maior que') {
-              return (planet[column] === 'unknown'
-                ? false : parseFloat(planet[column]) > parseFloat(number));
-            } if (operator === 'menor que') {
-              return (planet[column] === 'unknown'
-                ? false : parseFloat(planet[column]) < parseFloat(number));
-            }
+        {listFilter.length && listFilter.reduce((acc, curr) => acc.filter((planet) => {
+          const { column, operator, number } = curr;
+          if (operator === 'maior que') {
             return (planet[column] === 'unknown'
-              ? false : parseFloat(planet[column]) === parseFloat(number));
-          })
-          .map((planet) => (<Line key={ planet.name } planet={ planet } />))}
+              ? false : parseFloat(planet[column]) > parseFloat(number));
+          } if (operator === 'menor que') {
+            return (planet[column] === 'unknown'
+              ? false : parseFloat(planet[column]) < parseFloat(number));
+          }
+          return (planet[column] === 'unknown'
+            ? false : parseFloat(planet[column]) === parseFloat(number));
+        }), [...data]).map((planet) => (<Line key={ planet.name } planet={ planet } />))}
       </table>
     </>
   );
