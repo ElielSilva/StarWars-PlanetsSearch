@@ -145,9 +145,9 @@ function Table() {
           .sort((a, b) => a.name < b.name)
           .map((planet) => (<Line key={ planet.name } planet={ planet } />))} */}
         {(!nameFilter && !listFilter.length) && data
-          .sort((a,b)=>{
+          .sort((a, b) => {
             if (a.name > b.name) return 1;
-            if (a.name < b.name) return -1;
+            if (a.name < b.name) return NUMBER_ONE_NEGATIVE;
             return 0;
           })
           .sort((a, b) => (a[filterAscDesc.order.column] === 'unknown'
