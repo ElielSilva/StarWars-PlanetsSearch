@@ -17,7 +17,7 @@ function Line({ planet }) {
     url } = planet;
   return (
     <tr>
-      <td>{name}</td>
+      <td data-testid="planet-name">{name}</td>
       <td>{RotationPeriod}</td>
       <td>{OrbitalPeriod}</td>
       <td>{diameter}</td>
