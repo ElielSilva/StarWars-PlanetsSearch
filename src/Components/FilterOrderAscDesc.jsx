@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 // import styled from 'styled-components';
 
-// const Form = styled.form`
-//   background-color: rgba(0, 0, 0, 0.2)
-//   & input {background-color: rgba(255, 255, 255, 0.4);}
+// const Input = styled.input`
+//   display: block;
+//   margin-left: 50%;
+//   height: 42px;
+//   width: 211px;
+//   border-radius: 10px;
 // `;
 
 function FilterOrderAscDesc({ chengeFilterAscDesc }) {

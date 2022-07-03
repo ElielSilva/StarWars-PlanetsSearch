@@ -1,9 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react';
+import styled from 'styled-components';
 import planetContext from '../Context/PlanetContext';
 import FilterOrderAscDesc from './FilterOrderAscDesc';
 import Line from './Line';
 import LineFixed from './LineFixed';
 // import PropTypes from 'prop-types';
+const Input = styled.input`
+  display: block;
+  margin-left: 40%;
+  height: 42px;
+  width: 211px;
+  border-radius: 10px;
+`;
+
+const Div = styled.div`
+  display: flex;
+  justify-content: space-evenly;;
+  
+`;
+
 
 function Table() {
   const NUMBER_ONE_NEGATIVE = -1;
@@ -64,55 +79,56 @@ function Table() {
 
   return (
     <>
-      <input
+      <Input
         type="text"
         name="NameFilter"
         id=""
-        placeholder="name filer planet"
+        placeholder="name filter planet"
         value={ nameFilter }
         onChange={ (e) => setFilter(e.target.value) }
         data-testid="name-filter"
       />
-      <select
-        data-testid="column-filter"
-        name="column"
-        value={ numberFilter.column }
-        onChange={ (e) => chengeFilterNumber(e.target) }
-      >
-        {listNameFilter && listNameFilter
-          .map((name) => (<option value={ name } key={ name }>{name}</option>))}
-        {/* <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option> */}
-      </select>
-      <select
-        data-testid="comparison-filter"
-        name="operator"
-        value={ numberFilter.operator }
-        onChange={ (e) => chengeFilterNumber(e.target) }
-      >
-        <option value="maior que">maior que</option>
-        <option value="menor que">menor que</option>
-        <option value="igual a">igual a</option>
-      </select>
-      <input
-        type="number"
-        name="number"
-        data-testid="value-filter"
-        value={ numberFilter.number }
-        onChange={ (e) => chengeFilterNumber(e.target) }
-      />
-      <button
-        type="button"
-        data-testid="button-filter"
-        disabled={ !listNameFilter.length }
-        onClick={ () => addFilterToList() }
-      >
-        Filter
-      </button>
-      <FilterOrderAscDesc chengeFilterAscDesc={ chengeFilterAscDesc } />
+      <div>
+        <div>
+          <select
+            data-testid="column-filter"
+            name="column"
+            value={ numberFilter.column }
+            onChange={ (e) => chengeFilterNumber(e.target) }
+          >
+            {listNameFilter && listNameFilter
+              .map((name) => (<option value={ name } key={ name }>{name}</option>))}
+          </select>
+          <select
+            data-testid="comparison-filter"
+            name="operator"
+            value={ numberFilter.operator }
+            onChange={ (e) => chengeFilterNumber(e.target) }
+          >
+            <option value="maior que">maior que</option>
+            <option value="menor que">menor que</option>
+            <option value="igual a">igual a</option>
+          </select>
+          <input
+            type="number"
+            name="number"
+            data-testid="value-filter"
+            value={ numberFilter.number }
+            onChange={ (e) => chengeFilterNumber(e.target) }
+          />
+          <button
+            type="button"
+            data-testid="button-filter"
+            disabled={ !listNameFilter.length }
+            onClick={ () => addFilterToList() }
+          >
+            Filter
+          </button>
+        </div>
+        <div>
+          <FilterOrderAscDesc chengeFilterAscDesc={ chengeFilterAscDesc } />
+        </div>
+      </div>
       <ul>
         {listFilter && listFilter
           .map(({ column, operator, number }, index) => (

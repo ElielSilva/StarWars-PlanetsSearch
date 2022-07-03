@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Header = styled.header`
-  background-color: red;
+  background-color: #282c34;
   width: 100vw;
   display:  flex;
   display: -webkit-flex;

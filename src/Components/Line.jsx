@@ -26,7 +26,9 @@ function Line({ planet }) {
       <td>{terrain}</td>
       <td>{SurfaceWater}</td>
       <td>{population}</td>
-      <td>{films}</td>
+      <td>
+        {films.map((y) => y.split('/')[5])}
+      </td>
       <td>{created}</td>
       <td>{edited}</td>
       <td>{url}</td>
